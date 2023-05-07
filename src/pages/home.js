@@ -3,9 +3,12 @@ import { clientSupabase } from '../supabase/client';
 import { useNavigate } from 'react-router-dom';
 
 import TaskForm from '../components/taskForm';
+import { useTask } from '../context/TaskContext';
 
 export default function Home() {
   const navigate = useNavigate()
+  const obj = useTask()
+  console.log(obj)
 
   useEffect(() => {
     if(!clientSupabase.auth.getSession()) navigate('/login')
