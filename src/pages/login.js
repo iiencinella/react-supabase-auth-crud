@@ -8,7 +8,7 @@ function Login() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (clientSupabase.auth.getUser()) navigate('/')
+    if (clientSupabase.auth.getSession()) navigate('/')
   }, [navigate])
 
   const handleSubmit = async (e) => {

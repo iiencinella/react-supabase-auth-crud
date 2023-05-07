@@ -8,7 +8,7 @@ export default function Home() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if(!clientSupabase.auth.getUser()) navigate('/login')
+    if(!clientSupabase.auth.getSession()) navigate('/login')
   }, [navigate])
 
   return (
