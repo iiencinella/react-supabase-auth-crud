@@ -12,7 +12,6 @@ function TaskForm() {
         name: taskName,
         userId: user.data.user.id,
       })
-      console.log(result)
     } catch (error) {
       console.error(error)
     }
