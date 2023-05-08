@@ -1,23 +1,40 @@
 import { useEffect } from 'react';
 import { useTask } from '../context/TaskContext';
+import TaskCard from './TaskCard';
 
 export default function TaskList() {
-  const {tasks, getTasks} = useTask()
+  const { tasks, getTasks, loading } = useTask()
 
   useEffect(() => {
     getTasks()
   }, [])
 
-  return (
-    <>
-    {
-      tasks.map((task) => (
-        <div key={task.id}>
-          <h2>{task.name}</h2>
-          <p>{JSON.stringify(task.done)}</p>
-        </div>
-      ))
+  function RenderTasks() {
+    console.log(tasks.lenght)
+    if (loading) {
+      return <p>Loading ...</p>
     }
-    </>
+    else if (tasks.lenght === 0) {
+      return <p>No hay tareas para cargar</p>
+    }
+    else {
+      return (
+        <>
+          {
+            tasks.map((task) => (
+              <div key={task.id}>
+                <TaskCard task={task} />
+              </div>
+            ))
+          }
+        </>
+      )
+    }
+  }
+
+  return (
+    <div>
+      {RenderTasks()}
+    </div>
   )
 }

@@ -3,8 +3,9 @@ import { useTask } from '../context/TaskContext';
 export default function TaskCard({ task }) {
   const {deleteTask, getTasks} = useTask()
 
-  const handleDelete = () => {
-    deleteTask(task.id)
+  const handleDelete = async () => {
+    await deleteTask(task.id)
+    getTasks()
   }
 
   const handleDone = () => {

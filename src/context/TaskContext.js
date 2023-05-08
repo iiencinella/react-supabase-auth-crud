@@ -12,13 +12,16 @@ export const useTask = () => {
 export const TaskProvider = ({ children }) => {
   const [tasks, setTasks] = useState([])
   const [adding, setAdding] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   const getTasks = async (done = false) => {
+    setLoading(true)
     const { data: { user } } = await clientSupabase.auth.getUser()
     const { error, data } = await clientSupabase.from('Tasks').select().eq('userId', user.id).eq('done', done).order('id', { ascending: true })
     if (error) throw error
 
     setTasks(data)
+    setLoading(false)
   }
 
   const createTask = async (taskName) => {
@@ -29,7 +32,7 @@ export const TaskProvider = ({ children }) => {
         name: taskName,
         userId: user.id,
       })
-  
+
       if (error) throw error
     } catch (error) {
       console.error(error)
@@ -38,7 +41,14 @@ export const TaskProvider = ({ children }) => {
     }
   }
 
-  return <TaskContext.Provider value={{ tasks, getTasks, createTask, adding }}>
+  const deleteTask = async (id) => {
+    const { data: { user } } = await clientSupabase.auth.getUser()
+    const { data, error } = await clientSupabase.from('Tasks').delete().eq('userId', user.id).eq('id', id)
+
+    if (error) throw error
+  }
+
+  return <TaskContext.Provider value={{ tasks, getTasks, createTask, adding, loading, deleteTask }}>
     {children}
   </TaskContext.Provider>
 }
