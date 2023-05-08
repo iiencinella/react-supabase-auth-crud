@@ -14,12 +14,14 @@ export default function TaskCard({ task }) {
   }
 
   return (
-    <div>
+    <div className='card'>
+      <div className='card__content'>
       <h2>{task.name}</h2>
       <p>{JSON.stringify(task.done)}</p>
       <div>
         <button onClick={() => handleDelete()}>Delete</button>
         <button onClick={() => handleDone()}>Done</button>
+      </div>
       </div>
     </div>
   )
