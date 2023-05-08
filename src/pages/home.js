@@ -1,17 +1,16 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { clientSupabase } from '../supabase/client';
 import { useNavigate } from 'react-router-dom';
 
 import TaskForm from '../components/TaskForm';
-import { useTask } from '../context/TaskContext';
 import TaskList from '../components/TaskList';
 
 export default function Home() {
   const navigate = useNavigate()
-  const {tasks} = useTask()
+  const [showTaskDone, setShowTaskDone] = useState(false)
 
   useEffect(() => {
-    if(!clientSupabase.auth.getSession()) navigate('/login')
+    if (!clientSupabase.auth.getSession()) navigate('/login')
   }, [navigate])
 
   return (
@@ -21,7 +20,12 @@ export default function Home() {
 
       <TaskForm />
 
-      <TaskList />
+      <header>
+        <span>Task Pending</span>
+        <button onClick={() => setShowTaskDone(!showTaskDone)}>Change Show Task done</button>
+      </header>
+
+      <TaskList done={showTaskDone} />
     </>
   )
 }

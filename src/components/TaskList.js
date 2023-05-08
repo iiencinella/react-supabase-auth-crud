@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import { useTask } from '../context/TaskContext';
 import TaskCard from './TaskCard';
 
-export default function TaskList() {
+export default function TaskList({done = false}) {
   const { tasks, getTasks, loading } = useTask()
 
   useEffect(() => {
-    getTasks()
-  }, [])
+    getTasks(done)
+  }, [done])
 
   function RenderTasks() {
     if (loading) {
