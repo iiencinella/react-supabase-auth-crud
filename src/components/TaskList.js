@@ -13,7 +13,7 @@ export default function TaskList({done = false}) {
     if (loading) {
       return <p>Loading ...</p>
     }
-    else if (tasks.lenght === 0) {
+    else if (tasks.length === 0) {
       return <p>No hay tareas para cargar</p>
     }
     else {
