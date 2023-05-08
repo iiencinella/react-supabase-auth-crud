@@ -48,7 +48,14 @@ export const TaskProvider = ({ children }) => {
     if (error) throw error
   }
 
-  return <TaskContext.Provider value={{ tasks, getTasks, createTask, adding, loading, deleteTask }}>
+  const updateTask = async (id, updateFiles) => {
+    const { data: { user } } = await clientSupabase.auth.getUser()
+    const { data, error } = await clientSupabase.from('Tasks').update(updateFiles).eq('userId', user.id).eq('id', id)
+
+    if (error) throw error
+  }
+
+  return <TaskContext.Provider value={{ tasks, getTasks, createTask, adding, loading, deleteTask, updateTask }}>
     {children}
   </TaskContext.Provider>
 }

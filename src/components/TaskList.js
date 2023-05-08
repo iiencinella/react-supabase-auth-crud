@@ -10,7 +10,6 @@ export default function TaskList() {
   }, [])
 
   function RenderTasks() {
-    console.log(tasks.lenght)
     if (loading) {
       return <p>Loading ...</p>
     }
